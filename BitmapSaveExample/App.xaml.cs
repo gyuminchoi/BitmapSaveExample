@@ -16,6 +16,7 @@ namespace BitmapSaveExample
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            MessageBox.Show("이미지 저장시 업로드한 경로의 드라이브에서 TestImagePath폴더에 저장됩니다.", "확인하기", MessageBoxButton.OK);
             var window = new MainWindow();
             this.MainWindow = window;
             window.Show();

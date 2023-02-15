@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:BitmapSaveExample.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel, IsDesignTimeCreatable=False}"
         mc:Ignorable="d"
-        Title="비트맵 저장 테스트" Height="450" Width="400">
+        Title="비트맵 저장 테스트.V1.0.0" Height="450" Width="400">
     <Grid>
         <StackPanel Margin="20" Grid.ColumnSpan="2">
             <Grid Margin="5">
