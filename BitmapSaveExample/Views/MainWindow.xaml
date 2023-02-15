@@ -7,19 +7,20 @@
         xmlns:viewModels="clr-namespace:BitmapSaveExample.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel, IsDesignTimeCreatable=False}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="400">
+        Title="비트맵 저장 테스트" Height="450" Width="400">
     <Grid>
-        <StackPanel Margin="30">
+        <StackPanel Margin="20" Grid.ColumnSpan="2">
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.8*"/>
                     <ColumnDefinition Width="0.2*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox IsReadOnly="True" Text="{Binding ImagePath}" Margin="0,0,5,0" FontSize="20"/>
+                <TextBox IsReadOnly="True" Text="{Binding ImagePath}" Margin="0,0,5,0" Height="26" FontSize="14" VerticalContentAlignment="Center"/>
                 <Button Grid.Column="1" Content="불러오기" Command="{Binding BtnSetImagePathClick}" />
             </Grid>
-            <Border Grid.Row="1" Margin="5 10 5 10" Background="LightGray" BorderBrush="Black" BorderThickness="1">
+            <Button Content="비트맵 저장" Margin="5" Height="30" Command="{Binding BtnSaveBitmapClick}"/>
+            <Border Grid.Row="1" Margin="5 5 5 10" Background="LightGray" BorderBrush="Black" BorderThickness="1">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <!-- Column -->
@@ -28,22 +29,21 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <!-- Total -->
                         <RowDefinition Height="*"/>
-                        <!-- OK -->
                         <RowDefinition Height="*"/>
-                        <!-- NG -->
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Content="Save Time"  Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Margin="5" Background="White"/>
-                    <Label Content="Drive Type"     Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Margin="5" Background="White"/>
-                    <!--<Label Content="NG"     Grid.Row="2" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Margin="5" Background="White"/>-->
-                    <Label Content="{Binding SaveTime}"   Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Margin="5" Background="White"/>
-                    <Label Content="{Binding DiskType}"      Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Margin="5" Background="White"/>
-                    <!--<Label Content="{Binding InspectedCount.CountNG}"      Grid.Row="2" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Margin="5" Background="White"/>-->
+                    <Label Content="Saving Time"  Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="Drive Type"     Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="Model Name"     Grid.Row="2" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="Discription"     Grid.Row="3" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="{Binding SavingTime}"   Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="{Binding DiskType}"      Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <TextBox Text="{Binding ModelName}" IsReadOnly="True" Grid.Row="2" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="{Binding Discription}"      Grid.Row="3" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
                 </Grid>
-                </Border>
-
+            </Border>
         </StackPanel>
     </Grid>
 </Window>
