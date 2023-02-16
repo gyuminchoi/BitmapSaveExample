@@ -137,7 +137,6 @@ namespace BitmapSaveExample.ViewModels
             
         }
 
-        //TODO : Disk 여러개 있는 곳에서 Test 해봐야함
         private void Initialize()
         {
             try
@@ -191,13 +190,12 @@ namespace BitmapSaveExample.ViewModels
                 WqlObjectQuery q = new WqlObjectQuery("SELECT * FROM Win32_DiskDrive");
                 using (ManagementObjectSearcher res = new ManagementObjectSearcher(q))
                 {
-                    int index = length;
+                    int index = 0;
                     foreach (ManagementObject o in res.Get())
                     {
-                        index--;
-
                         DiskList[index].ModelName = (string)o["Model"];
                         DiskList[index].Discription = (string)o["Description"];
+                        index++;
                     }
                 }
             }
