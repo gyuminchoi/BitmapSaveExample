@@ -23,6 +23,7 @@ namespace BitmapSaveExample.ViewModels
         private string _modelName;
         private string _discription;
         private int _saveCount;
+        private bool _isSave;
 
         public string ImagePath
         {
@@ -54,6 +55,12 @@ namespace BitmapSaveExample.ViewModels
             set { _discription = value; OnPropertyChanged(nameof(Discription)); }
         }
 
+        public bool IsSave
+        {
+            get => _isSave;
+            set { _isSave = value; OnPropertyChanged(nameof(IsSave)); }
+        }
+
         public List<DiskInfo> DiskList { get; set; }
 
         public ICommand BtnSetImagePathClick { get; set; }
@@ -71,8 +78,10 @@ namespace BitmapSaveExample.ViewModels
         private void OnUploadImagePath(object obj)
         {
             string backup = ImagePath;
-            ImagePath = GetFilePath(backup, "bmp");
+            ImagePath = GetFilePath(backup, "bmp", "jpg", "png");
 
+            IsSave = FindImagePath();
+            
             DiskInfo info = FindDiskInfo(ImagePath);
             if (info == null) return;
 
@@ -80,14 +89,18 @@ namespace BitmapSaveExample.ViewModels
             ModelName = info.ModelName;
             Discription = info.Discription;
 
+            
             CreateSaveImagePath(info.RootDirectory);
         }
 
         private void OnSaveBitmap(object obj)
         {
+            IsSave = FindImagePath();
+            if (!IsSave) return;
+
             DiskInfo info =  FindDiskInfo(ImagePath);
             if(info == null) return;
-
+            
             string extention = Path.GetExtension(ImagePath);
             string testPath = SetPath(info.RootDirectory);
             string savePath = Path.Combine(testPath, _saveCount.ToString());
@@ -102,12 +115,12 @@ namespace BitmapSaveExample.ViewModels
             _saveCount++;
         }
 
-        public string GetFilePath(string backup, string filter)
+        public string GetFilePath(string backup = "", string filter1 = "*", string filter2 = "*", string fiter3 = "*")
         {
             var fileDialog = new OpenFileDialog()
             {
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                Filter = $"파일 확장자 (*.{filter})|*.{filter}"
+                Filter = $"확장자 (*.{filter1})|*.{filter1}|확장자 (*.{filter2})|*.{filter2}|확장자 (*.{fiter3})|*.{fiter3}"
             };
 
             if (fileDialog.ShowDialog() == true) return fileDialog.FileName;
@@ -129,12 +142,19 @@ namespace BitmapSaveExample.ViewModels
 
                 return info;
             }
+            catch (ArgumentNullException) { return null; }
             catch (Exception err)
             {
                 MessageBox.Show(err.ToString());
                 return null;
             }
             
+        }
+
+        private bool FindImagePath()
+        {
+            if (File.Exists(ImagePath)) return true;
+            else return false;
         }
 
         private void Initialize()
