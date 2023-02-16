@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BitmapSaveExample.Model
 {
@@ -13,6 +14,7 @@ namespace BitmapSaveExample.Model
         private string _discription;
         private string _diskType;
         private string _rootDirectory;
+        private string _diskName;
         public string ModelName
         {
             get => _modelName;
@@ -34,6 +36,12 @@ namespace BitmapSaveExample.Model
             get => _rootDirectory;
             set { _rootDirectory = value; OnPropertyChanged(nameof(RootDirectory)); }
         }
+        public string DiskName
+        {
+            get => _diskName;
+            set { _diskName = value; OnPropertyChanged(nameof(DiskName)); }
+        }
+
         public DiskInfo()
         {
         }

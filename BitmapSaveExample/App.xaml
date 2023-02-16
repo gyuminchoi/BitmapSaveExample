@@ -2,8 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:BitmapSaveExample"
+             
              Startup="Application_Startup">
     <Application.Resources>
-         
+        <ResourceDictionary Source="Resources/ViewConverters.xaml"/>
     </Application.Resources>
 </Application>

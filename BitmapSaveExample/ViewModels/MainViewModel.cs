@@ -3,12 +3,14 @@ using BitmapSaveExample.Service;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace BitmapSaveExample.ViewModels
@@ -25,7 +27,7 @@ namespace BitmapSaveExample.ViewModels
         private int _saveCount;
         private bool _isSave;
         private double _fileSize;
-
+        private object _diskListLocker = new object();
         public string ImagePath
         {
             get => _imagePath;
@@ -68,7 +70,7 @@ namespace BitmapSaveExample.ViewModels
             set { _fileSize = value; OnPropertyChanged(nameof(FileSize)); }
         }
 
-        public List<DiskInfo> DiskList { get; set; }
+        public ObservableCollection<DiskInfo> DiskList { get; set; }
 
         public ICommand BtnSetImagePathClick { get; set; }
         public ICommand BtnSaveBitmapClick { get; set; }
@@ -77,9 +79,12 @@ namespace BitmapSaveExample.ViewModels
             BtnSetImagePathClick = new Command(OnUploadImagePath, CanExecute_Func);
             BtnSaveBitmapClick = new Command(OnSaveBitmap, CanExecute_Func);
 
-            DiskList = new List<DiskInfo>();
+            DiskList = new ObservableCollection<DiskInfo>();
+            BindingOperations.EnableCollectionSynchronization(DiskList, _diskListLocker);
             _saveCount = 0;
             Initialize();
+
+            IsSave = false;
         }
 
         private void OnUploadImagePath(object obj)
@@ -88,37 +93,39 @@ namespace BitmapSaveExample.ViewModels
             ImagePath = GetFilePath(backup, "bmp", "jpg", "png");
 
             IsSave = FindImagePath();
-            
-            DiskInfo info = FindDiskInfo(ImagePath);
-            if (info == null) return;
-
-            DiskType = info.DiskType;
-            ModelName = info.ModelName;
-            Discription = info.Discription;
             FileSize = GetFileSize(ImagePath);
-
-            CreateSaveImagePath(info.RootDirectory);
         }
 
-        private void OnSaveBitmap(object obj)
+        private void OnSaveBitmap(object rootPath)
         {
+            string rootName = rootPath.ToString();
+
             IsSave = FindImagePath();
             if (!IsSave) return;
 
-            DiskInfo info =  FindDiskInfo(ImagePath);
+            DiskInfo info = FindDiskInfo(rootName);
             if(info == null) return;
-            
+
+            if(ImagePath == null || ImagePath == string.Empty) return;
+
+            CreateSaveImagePath(info.RootDirectory);
+
             string extention = Path.GetExtension(ImagePath);
             string testPath = SetPath(info.RootDirectory);
             string savePath = Path.Combine(testPath, _saveCount.ToString());
 
-            Stopwatch stopwatch = Stopwatch.StartNew();
             using (Bitmap bmp = new Bitmap(ImagePath))
             {
+                var stopwatch = Stopwatch.StartNew();
                 bmp.Save(savePath + extention);
                 stopwatch.Stop();
                 SavingTime = stopwatch.Elapsed;
             }
+
+            DiskType = info.DiskType;
+            ModelName = info.ModelName;
+            Discription = info.Discription;
+
             _saveCount++;
         }
 
@@ -137,11 +144,12 @@ namespace BitmapSaveExample.ViewModels
 
         private double GetFileSize(string path)
         {
+            if(path == null || path == string.Empty) return 0;
             var fi = new FileInfo(path);
             using(var fs = fi.OpenRead())
             {
                 long size = fs.Length;
-                double mb = Math.Round((double)size / 1048576, 2);
+                double mb = Math.Round((double)size / 1048576, 4);
                 return mb;
             }
         } 
@@ -167,7 +175,6 @@ namespace BitmapSaveExample.ViewModels
                 MessageBox.Show(err.ToString());
                 return null;
             }
-            
         }
 
         private bool FindImagePath()
@@ -184,7 +191,11 @@ namespace BitmapSaveExample.ViewModels
                 int length = driveInfo.Length;
                 for (int i = 0; i < length; i++)
                 {
-                    var diskInfo = new DiskInfo() { RootDirectory = driveInfo[i].RootDirectory.ToString() };
+                    var diskInfo = new DiskInfo() 
+                    { 
+                        RootDirectory = driveInfo[i].RootDirectory.ToString(),
+                        DiskName = driveInfo[i].RootDirectory.ToString()
+                    };
 
                     DiskList.Add(diskInfo);
                 }
@@ -223,6 +234,7 @@ namespace BitmapSaveExample.ViewModels
                                 break;
                         }
                         DiskList[index].DiskType = diskType;
+                        DiskList[index].DiskName += $" ({diskType}) Save";
                     }
                 }
 

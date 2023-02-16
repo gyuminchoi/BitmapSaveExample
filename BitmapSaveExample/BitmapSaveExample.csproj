@@ -59,7 +59,12 @@
     </ApplicationDefinition>
     <Compile Include="Model\DiskInfo.cs" />
     <Compile Include="Service\Command.cs" />
+    <Compile Include="Service\Converter\PathStateToBoolConverter.cs" />
     <Compile Include="Service\NotifyPropertyChanged.cs" />
+    <Page Include="Resources\ViewConverters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
