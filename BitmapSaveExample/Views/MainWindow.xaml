@@ -33,15 +33,18 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Content="Saving Time"  Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
-                    <Label Content="Drive Type"     Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
-                    <Label Content="Model Name"     Grid.Row="2" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
-                    <Label Content="Discription"     Grid.Row="3" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
-                    <Label Content="{Binding SavingTime}"   Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
-                    <Label Content="{Binding DiskType}"      Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
-                    <TextBox Text="{Binding ModelName}" IsReadOnly="True" Grid.Row="2" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
-                    <Label Content="{Binding Discription}"      Grid.Row="3" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="File Size"  Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="Saving Time"  Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="Drive Type"     Grid.Row="2" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="Model Name"     Grid.Row="3" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="Discription"     Grid.Row="4" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="{Binding FileSize}"   Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="{Binding SavingTime}"   Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="{Binding DiskType}"      Grid.Row="2" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <TextBox Text="{Binding ModelName}" IsReadOnly="True" Grid.Row="3" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
+                    <Label Content="{Binding Discription}"      Grid.Row="4" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5" Background="White"/>
                 </Grid>
             </Border>
         </StackPanel>

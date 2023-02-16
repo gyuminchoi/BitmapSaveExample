@@ -24,6 +24,7 @@ namespace BitmapSaveExample.ViewModels
         private string _discription;
         private int _saveCount;
         private bool _isSave;
+        private double _fileSize;
 
         public string ImagePath
         {
@@ -61,6 +62,12 @@ namespace BitmapSaveExample.ViewModels
             set { _isSave = value; OnPropertyChanged(nameof(IsSave)); }
         }
 
+        public double FileSize
+        {
+            get => _fileSize;
+            set { _fileSize = value; OnPropertyChanged(nameof(FileSize)); }
+        }
+
         public List<DiskInfo> DiskList { get; set; }
 
         public ICommand BtnSetImagePathClick { get; set; }
@@ -88,8 +95,8 @@ namespace BitmapSaveExample.ViewModels
             DiskType = info.DiskType;
             ModelName = info.ModelName;
             Discription = info.Discription;
+            FileSize = GetFileSize(ImagePath);
 
-            
             CreateSaveImagePath(info.RootDirectory);
         }
 
@@ -126,6 +133,18 @@ namespace BitmapSaveExample.ViewModels
             if (fileDialog.ShowDialog() == true) return fileDialog.FileName;
             else return backup;
         }
+
+
+        private double GetFileSize(string path)
+        {
+            var fi = new FileInfo(path);
+            using(var fs = fi.OpenRead())
+            {
+                long size = fs.Length;
+                double mb = Math.Round((double)size / 1048576, 2);
+                return mb;
+            }
+        } 
 
         private string SetPath(string localPath)
         {
